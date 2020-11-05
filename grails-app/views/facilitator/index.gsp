@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: pastel
-  Date: 11/4/2020
-  Time: 9:51 AM
+  Date: 11/5/2020
+  Time: 9:42 AM
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Team</title>
+    <title>Facilitator</title>
 
     <asset:stylesheet src="bootstrap.css"/>
 
@@ -17,18 +17,19 @@
 
     <script type="text/javascript">
 
-       $(function(){
-           const app = WS($)
-           app.initializeTeam()
-       })
+        $(function(){
+            const app = WS($)
+            app.initializeFacilitator()
+        })
 
     </script>
+
 
 </head>
 
 <body>
     <div class="container">
-        <h2>Team Member Workspace</h2>
+        <h2>Facilitator Workspace</h2>
         <div id="names-section">
             <h4>Names:</h4>
             <ul id="names-list"> </ul>
@@ -42,14 +43,13 @@
             <ul id="solutions-list"> </ul>
         </div>
 
+        <input id="phase"/>
+        <button id="next">Next Phase</button>
         <p></p>
         <p id="message-sent"></p>
-         </br>
         <input id="message" />
         <button id="send">Send</button>
 
-%{--        <input id="phase" />--}%
-%{--        <button id="set">Set</button>--}%
     </div>
 
 </body>

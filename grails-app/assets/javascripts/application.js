@@ -17,27 +17,34 @@ var WS = function ($) {
      */
     // initial phase setting
     let _phase = null
-    $("#names-section").hide()
-    $("#reasons-section").hide()
-    $("#solutions-section").hide()
 
+    const hideAllPhases = () => {
+        $("#names-section").hide()
+        $("#reasons-section").hide()
+        $("#solutions-section").hide()
+    }
+    hideAllPhases()
 
     // Create web socket and client
     const _socket = new SockJS( '/stomp' )
-    const _client = Stomp.over( _socket )
+    var _client = Stomp.over( _socket )
     // General connect and subscribe functions
-    const connect = (channel, handler) => {
+    const connect = (subscriptions ) => {
         _client.connect({}, () => {
-            _client.subscribe(channel, handler)
+            /*
+             * Generally subscribe need to be in the connect callback
+             * to insure that the connection has been made first
+             */
+            console.log('In connect callback')
+            for ( const i in subscriptions ) {
+                console.log('subscription: ', subscriptions)
+                _client.subscribe(subscriptions[i].channel, subscriptions[i].handler)
+            }
         })
-    }
-    const subscripe = (channel, handler) => {
-        const subscription = _client.subscribe(channel, handler)
-        return subscription
     }
 
     // handling which list the message should appear in
-    handleList = ( message ) => {
+    const handleList = ( message ) => {
         console.log('In handleList, message: ', message)
         const msg = JSON.parse(message.body)
         if( msg.length ) {
@@ -61,13 +68,49 @@ var WS = function ($) {
             console.log('no message body')
         }
     } // end handleList
+    /*
+     * Handle phase by progressively showing the list for the phase.
+     */
+    const handlePhase = ( message ) =>{
+        console.log('In handlePhase, message: ', message)
+        _phase = JSON.parse(message.body)
+        switch (_phase) {
+            case "END":
+            case "SOLUTIONS":
+                $("#solutions-section").show()
+            case "REASONS":
+                $("#reasons-section").show()
+            case "NAMES":
+                $("#names-section").show()
+                break
+            case "INITIAL":
+                hideAllPhases()
+                break
+            default:
+                let _phase = null
+                hideAllPhases()
+        }
+    } // end handlePhase
 
-    // Setting the send message widget and setting the channel.
+    const handleMessage = ( message ) => {
+        console.log('In handleMessage, message: ', message)
+        msg = JSON.parse(message.body)
+        $('#message-sent').text(msg)
+    } // end handleMessage
+
+
+    const send = (channel, message) => {
+        _client.send(channel, {}, JSON.stringify(message))
+    }
+    /*
+     * Sets the send message box and send button. It uses _client to send
+     * the message to the channel.
+     */
     const initializeSend = (channel) => {
 
         // Send button sends message to the list channel
         $("#send").click( () => {
-            _client.send(channel, {}, JSON.stringify($("#message").val()))
+            send(channel, $("#message").val())
             $("#message").val("")
         })
 
@@ -82,44 +125,85 @@ var WS = function ($) {
         })
     } // end initializeSend
 
-    const setPhase = (phase) => {
-        _phase = phase
-    }
 
 
     return {
+        /*
+         * Method for initializing Facilitator JS and
+         * code specific to Facilitator
+         */
+        initializeFacilitator: () => {
+            console.log('In initializeFacilitator')
+            // connect('topic/list', handleList)
+            const subscriptions = [
+                { channel: '/topic/list', handler: handleList },
+                { channel: '/topic/phase', handler: handlePhase },
+                { channel: '/topic/message', handler: handleMessage }
+                ]
+            connect( subscriptions )
+            initializeSend('/topic/message')
 
+            /*
+             * Code for moving phases
+             *
+             */
+            const phases = ['INITIAL', 'NAMES', 'REASONS', 'SOLUTIONS', 'END']
+
+            let phaseIndex = 0
+            $("#phase").val( phases[ phaseIndex ] )
+
+            $("#next").click(() => {
+                if ( phaseIndex < phases.length -1 ){
+                    phaseIndex++
+                    $("#phase").val( phases[ phaseIndex ] )
+                    send('/topic/phase', phases[ phaseIndex ])
+                }
+            })
+
+        }, // end initializeFacilitator
+
+        /*
+         * Method for initializing Team JS
+         */
         initializeTeam: () => {
-            console.log('initializeTeam')
-            connect('/topic/list', handleList )
+            console.log('In initializeTeam')
+
+            const subscriptions = [ { channel: '/topic/list', handler: handleList },
+                { channel: '/topic/phase', handler: handlePhase },
+                { channel: '/topic/message', handler: handleMessage }
+                ]
+            connect( subscriptions )
             initializeSend('/topic/list')
 
-            // For development
-            $("#set").click(function () {
-                _phase = $("#phase").val()
-                switch (_phase) {
-                    case "SOLUTIONS":
-                        $("#solutions-section").show()
-                    case "REASONS":
-                        $("#reasons-section").show()
-                    case "NAMES":
-                        $("#names-section").show()
-                        break
-                    default:
-                        let _phase = null
-                        $("#names-section").hide()
-                        $("#reasons-section").hide()
-                        $("#solutions-section").hide()
-                }
-                $("#phase").val("")
-            })
-            $("#phase").keypress( (event) => {
-                if ( event.which == 13 ) {  // 13 is keycode for enter
-                    $("#set").click()
-                    return false
-                }
-            })
-            // end for development
+            /*
+             * This code is for development of the Team page without Facilitator.
+             * It simulates moving through phases.
+             */
+
+            // $("#set").click(function () {
+            //     _phase = $("#phase").val()
+            //     switch (_phase) {
+            //         case "SOLUTIONS":
+            //             $("#solutions-section").show()
+            //         case "REASONS":
+            //             $("#reasons-section").show()
+            //         case "NAMES":
+            //             $("#names-section").show()
+            //             break
+            //         default:
+            //             let _phase = null
+            //             $("#names-section").hide()
+            //             $("#reasons-section").hide()
+            //             $("#solutions-section").hide()
+            //     }
+            //     $("#phase").val("")
+            // })
+            // $("#phase").keypress( (event) => {
+            //     if ( event.which == 13 ) {  // 13 is keycode for enter
+            //         $("#set").click()
+            //         return false
+            //     }
+            // })
 
         } // end initializeTeam
     }
