@@ -144,8 +144,9 @@ var WS = function ($) {
             initializeSend('/topic/message')
 
             /*
-             * Code for moving phases
-             *
+             * Code for moving through phases. Iterates through an
+             * array of phase names and sends the phase name on the
+             * phase channel. This is code unique to the Facilitator.
              */
             const phases = ['INITIAL', 'NAMES', 'REASONS', 'SOLUTIONS', 'END']
 
