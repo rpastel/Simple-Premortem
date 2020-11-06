@@ -8,7 +8,6 @@ class MessageWebSocket {
     @MessageMapping("/message")
     @SendTo("/topic/message")
     String phase(String message) {
-        println 'In MessageWebSocket, message: '+ message
         return message
     }
 

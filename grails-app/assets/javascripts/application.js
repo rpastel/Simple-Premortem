@@ -13,9 +13,17 @@
 var WS = function ($) {
 
     /*
-     * Code shared with Team and Facilitator
+     * Code shared with Team and Facilitator Views
      */
-    // initial phase setting
+    /*
+     * serverContext is the server contextPath specified in application.yml
+     * Interesting that only the stomp path needs to be corrected.
+     */
+    const serverContext = '/simplepremortem'
+
+    /*
+     * Intial Phase settings
+     */
     let _phase = null
 
     const hideAllPhases = () => {
@@ -25,15 +33,18 @@ var WS = function ($) {
     }
     hideAllPhases()
 
-    // Create web socket and client
-    const _socket = new SockJS( '/stomp' )
+    /*
+     * Create web socket and client
+     */
+    const _socket = new SockJS( serverContext + '/stomp' )
     var _client = Stomp.over( _socket )
     // General connect and subscribe functions
     const connect = (subscriptions ) => {
         _client.connect({}, () => {
             /*
-             * Generally subscribe need to be in the connect callback
-             * to insure that the connection has been made first
+             * Generally, subscribing need to be in the connect callback
+             * to insure that the connection has been made first and
+             * not run into JS async problems.
              */
             console.log('In connect callback')
             for ( const i in subscriptions ) {
@@ -43,7 +54,9 @@ var WS = function ($) {
         })
     }
 
-    // handling which list the message should appear in
+    /*
+     * Handles which list the message should appear in
+     */
     const handleList = ( message ) => {
         console.log('In handleList, message: ', message)
         const msg = JSON.parse(message.body)
@@ -68,8 +81,9 @@ var WS = function ($) {
             console.log('no message body')
         }
     } // end handleList
+
     /*
-     * Handle phase by progressively showing the list for the phase.
+     * Handles phase by progressively showing the list for the phase.
      */
     const handlePhase = ( message ) =>{
         console.log('In handlePhase, message: ', message)
@@ -92,16 +106,22 @@ var WS = function ($) {
         }
     } // end handlePhase
 
+    /*
+     * Handles where messages should appear.
+     */
     const handleMessage = ( message ) => {
         console.log('In handleMessage, message: ', message)
         msg = JSON.parse(message.body)
         $('#message-sent').text(msg)
     } // end handleMessage
 
-
+    /*
+     * Convenient function for call client send.
+     */
     const send = (channel, message) => {
         _client.send(channel, {}, JSON.stringify(message))
     }
+
     /*
      * Sets the send message box and send button. It uses _client to send
      * the message to the channel.
@@ -169,7 +189,8 @@ var WS = function ($) {
         initializeTeam: () => {
             console.log('In initializeTeam')
 
-            const subscriptions = [ { channel: '/topic/list', handler: handleList },
+            const subscriptions = [
+                { channel: '/topic/list', handler: handleList },
                 { channel: '/topic/phase', handler: handlePhase },
                 { channel: '/topic/message', handler: handleMessage }
                 ]
@@ -177,7 +198,7 @@ var WS = function ($) {
             initializeSend('/topic/list')
 
             /*
-             * This code is for development of the Team page without Facilitator.
+             * This code was for development of the Team page without Facilitator.
              * It simulates moving through phases.
              */
 

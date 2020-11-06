@@ -8,7 +8,13 @@ class ListWebSocket {
     @MessageMapping("/list")
     @SendTo("/topic/list")
     String list(String message) {
-//        println 'In ListWebSocket, message: '+ message
+        /*
+         * I have not been able to figure out to get print or logging to work in this.
+         * Even moving the method to controller does not help.
+         * I tried:
+         * https://sergiodelamo.com/blog/grails-tips-how-to-log-from-a-none-grails-artifact.html
+         * does not.
+         */
         return message
     }
 
