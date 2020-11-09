@@ -18,21 +18,16 @@ class PremortemWebSocket {
         return message
     }
 
-    @MessageMapping("/message")
-    @SendTo("/topic/message")
-    String message(String message) {
-        return message
-    }
-
-
-
     @MessageMapping("/phase")
     @SendTo("/topic/phase")
     String phase(String message) {
         return message
     }
 
-
-
+    @MessageMapping("/message")
+    @SendTo("/topic/message")
+    String message(String message) {
+        return message
+    }
 
 }

@@ -21,6 +21,14 @@
 </head>
 
 <body>
+    <div class="container">
 
+        <g:render template="/lists" />
+        <br/>
+        <g:render template="/message" />
+
+        <g:layoutBody/>
+
+    </div>
 </body>
 </html>

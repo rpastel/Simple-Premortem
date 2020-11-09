@@ -27,30 +27,30 @@
 </head>
 
 <body>
-    <div class="container">
-        <h2>Team Member Workspace</h2>
-        <div id="names-section">
-            <h4>Names:</h4>
-            <ul id="names-list"> </ul>
-        </div>
-        <div id="reasons-section">
-            <h4>Reasons:</h4>
-            <ul id="reasons-list"> </ul>
-        </div>
-        <div id="solutions-section">
-            <h4>Solutions:</h4>
-            <ul id="solutions-list"> </ul>
-        </div>
+%{--    <div class="container">--}%
+%{--        <h2>Team Member Workspace</h2>--}%
+%{--        <div id="names-section">--}%
+%{--            <h4>Names:</h4>--}%
+%{--            <ul id="names-list"> </ul>--}%
+%{--        </div>--}%
+%{--        <div id="reasons-section">--}%
+%{--            <h4>Reasons:</h4>--}%
+%{--            <ul id="reasons-list"> </ul>--}%
+%{--        </div>--}%
+%{--        <div id="solutions-section">--}%
+%{--            <h4>Solutions:</h4>--}%
+%{--            <ul id="solutions-list"> </ul>--}%
+%{--        </div>--}%
 
-        <p></p>
-        <p id="message-sent"></p>
-         </br>
-        <input id="message" />
-        <button id="send">Send</button>
+%{--        <p></p>--}%
+%{--        <p id="message-sent"></p>--}%
+%{--        </br>--}%
+%{--        <input id="message" />--}%
+%{--        <button id="send">Send</button>--}%
 
 %{--        <input id="phase" />--}%
 %{--        <button id="set">Set</button>--}%
-    </div>
+%{--    </div>--}%
 
 </body>
 </html>
