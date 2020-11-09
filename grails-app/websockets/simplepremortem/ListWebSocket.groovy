@@ -3,7 +3,7 @@ package simplepremortem
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 
-class PremortemWebSocket {
+class ListWebSocket {
 
     @MessageMapping("/list")
     @SendTo("/topic/list")
@@ -15,18 +15,6 @@ class PremortemWebSocket {
          * https://sergiodelamo.com/blog/grails-tips-how-to-log-from-a-none-grails-artifact.html
          * does not.
          */
-        return message
-    }
-
-    @MessageMapping("/phase")
-    @SendTo("/topic/phase")
-    String phase(String message) {
-        return message
-    }
-
-    @MessageMapping("/message")
-    @SendTo("/topic/message")
-    String message(String message) {
         return message
     }
 
