@@ -38,7 +38,8 @@ var WS = function ($) {
      */
     const _socket = new SockJS( serverContext + '/stomp' )
     const _client = Stomp.over( _socket )
-    // General connect and subscribe functions
+
+    // Convenient connect and subscribe functions
     const connect = (subscriptions ) => {
         _client.connect({}, () => {
             /*
