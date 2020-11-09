@@ -13,6 +13,8 @@
 </head>
 
 <body>
+<!-- Used for developing with out a Facilitator view -->
+%{--<g:render template="/phase" />--}%
 </body>
 
 </html>
