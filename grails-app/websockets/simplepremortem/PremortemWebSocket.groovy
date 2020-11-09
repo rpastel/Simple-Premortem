@@ -3,7 +3,7 @@ package simplepremortem
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 
-class ListWebSocket {
+class PremortemWebSocket {
 
     @MessageMapping("/list")
     @SendTo("/topic/list")
@@ -17,5 +17,22 @@ class ListWebSocket {
          */
         return message
     }
+
+    @MessageMapping("/message")
+    @SendTo("/topic/message")
+    String message(String message) {
+        return message
+    }
+
+
+
+    @MessageMapping("/phase")
+    @SendTo("/topic/phase")
+    String phase(String message) {
+        return message
+    }
+
+
+
 
 }
