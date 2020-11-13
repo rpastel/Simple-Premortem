@@ -39,7 +39,7 @@ var WS = function ($) {
     const _socket = new SockJS( serverContext + '/stomp' )
     const _client = Stomp.over( _socket )
 
-    // Convenient connect and subscribe functions
+    // Convenient connect and subscribe function
     const connect = (subscriptions ) => {
         _client.connect({}, () => {
             /*
@@ -49,7 +49,7 @@ var WS = function ($) {
              */
             console.log('In connect callback')
             for ( const i in subscriptions ) {
-                console.log('subscription: ', subscriptions)
+                console.log('subscription[i]: ', subscriptions[i])
                 _client.subscribe(subscriptions[i].channel, subscriptions[i].handler)
             }
         })
@@ -102,7 +102,7 @@ var WS = function ($) {
                 hideAllPhases()
                 break
             default:
-                let _phase = null
+                _phase = null
                 hideAllPhases()
         }
     } // end handlePhase
@@ -112,7 +112,7 @@ var WS = function ($) {
      */
     const handleMessage = ( message ) => {
         console.log('In handleMessage, message: ', message)
-        msg = JSON.parse(message.body)
+        const msg = JSON.parse(message.body)
         $('#message-sent').text(msg)
     } // end handleMessage
 
@@ -181,7 +181,6 @@ var WS = function ($) {
                     send('/topic/phase', phases[ phaseIndex ])
                 }
             })
-
         }, // end initializeFacilitator
 
         /*
