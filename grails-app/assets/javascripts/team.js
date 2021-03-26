@@ -1,3 +1,4 @@
+// Required for WS JavaScript function
 //= require application
 
 $(function(){

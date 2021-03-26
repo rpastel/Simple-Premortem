@@ -4,6 +4,7 @@
     <meta name="layout" content="app"/>
     <title>Facilitator</title>
 
+    <!-- Load the JS code for facilitator view -->
     <asset:javascript src="facilitator" />
 
 </head>

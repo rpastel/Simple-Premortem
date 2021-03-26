@@ -4,6 +4,7 @@
     <meta name="layout" content="app"/>
     <title>Team</title>
 
+    <!-- Load the JS code for team view -->
     <asset:javascript src="team" />
 
 </head>
