@@ -72,6 +72,9 @@ bootRun {
 
 
 assets {
+    // Turns off develop mode for asset-pipeline. Simulates deployment during local development.
+    developmentRuntime=false
+
     minifyJs = true
     minifyCss = true
 }

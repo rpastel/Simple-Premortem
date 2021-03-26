@@ -4,12 +4,8 @@
     <meta name="layout" content="app"/>
     <title>Team</title>
 
-    <script type="text/javascript">
-       $(function(){
-           const app = WS($)
-           app.initializeTeam()
-       })
-    </script>
+    <asset:javascript src="team" />
+
 </head>
 
 <body>

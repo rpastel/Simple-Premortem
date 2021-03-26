@@ -4,12 +4,8 @@
     <meta name="layout" content="app"/>
     <title>Facilitator</title>
 
-    <script type="text/javascript">
-        $(function(){
-            const app = WS($)
-            app.initializeFacilitator()
-        })
-    </script>
+    <asset:javascript src="facilitator" />
+
 </head>
 
 <body>
@@ -17,5 +13,7 @@
     <p></p>
     <g:render template="/phase" />
 
+
 </body>
+
 </html>
