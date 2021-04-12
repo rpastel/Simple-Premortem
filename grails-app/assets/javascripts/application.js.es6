@@ -10,9 +10,11 @@
 //= require popper.min
 //= require_self
 
-// Note that is file is named "application.js.es6".
-// The ".es6" suffix alerts assets-pipeline to transpile the file.
-// Otherwise deployment fails. 
+/*
+ * Note that is file is named "application.js.es6".
+ * The ".es6" suffix alerts assets-pipeline to transpile the file.
+ * Otherwise deployment fails.
+ */
 
 var WS = function ($) {
 
