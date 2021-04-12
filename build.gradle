@@ -72,7 +72,7 @@ bootRun {
 
 
 assets {
-    // Turns offs asset-pipeline's develop mode. Simulates deployment during local development.
+    // Turns offs asset-pipeline's development mode. Simulates deployment during local development.
     // http://www.asset-pipeline.com/manual/index.html#configuration
     // Can set true or comment out, but check deployment from time to time.
     developmentRuntime=false
