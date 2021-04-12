@@ -3,6 +3,6 @@
 
 $(function(){
     console.log("In facilitator.js running")
-    const app = WS($)
+    var app = WS($)
     app.initializeFacilitator()
 })

@@ -77,8 +77,13 @@ assets {
     // Can set true or comment out, but check deployment from time to time.
     developmentRuntime=false
 
-    minifyJs = true
-    minifyCss = true
+    // Need to enable ES6 preprocessing.
+    // This is done by adding .es6 to the end of the .js file extension
+    // http://www.asset-pipeline.com/manual/index.html#ecmascript-2017-2018-beyond
+    // For this project added .es6 to assets/javascript/application.js.es6
+
+    minifyJs=true
+    minifyCss=true
 }
 
 tasks.withType(Test) {

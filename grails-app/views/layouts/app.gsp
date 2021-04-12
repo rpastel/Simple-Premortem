@@ -15,6 +15,7 @@
     <asset:stylesheet src="bootstrap.css"/>
 
 %{-- spring-websocket does not require  <asset:javascript src="application" />--}%
+
     <asset:javascript src="spring-websocket" />
 
     <g:layoutHead/>

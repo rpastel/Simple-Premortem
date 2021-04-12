@@ -3,6 +3,6 @@
 
 $(function(){
     console.log("In team.js running")
-    const app = WS($)
+    var app = WS($)
     app.initializeTeam()
 })
